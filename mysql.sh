@@ -26,19 +26,22 @@ validate() {
     fi 
 }
 
-dnf module enable mysql:8.4 -y
+dnf module enable mysql:8.4 -y &>> $logs_file
 validate $? "Enable mysql:8.4 "
 
-dnf install mysql-server -y
-validate $? "install mysql server "
+dnf install mysql-server -y  &>> $logs_file
+validate $? "install mysql server " 
 
-systemctl enable mysqld
+systemctl enable mysqld &>> $logs_file
 validate $? "enable mysqld service"
 
-systemctl start mysqld
+systemctl start mysqld  &>> $logs_file
 validate $? "start mysql "
 
 
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass RoboShop@1 
 validate $? "mysql user creation "
+
+echo "configuration endtime = $(date +"%Y%m%d_%H%M%S")"
+echo "time taken : $SECONDS"
 
