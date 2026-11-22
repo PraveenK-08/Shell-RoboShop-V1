@@ -1,7 +1,7 @@
 #!/bin/bash
 RED='\e[31m'
 GREEN='\e[1;32m'
-logs_folder="/var/log/Shell-practice"
+logs_folder="/var/log/Shell-RoboShop-V1"
 logs_file="$logs_folder/$0"
 
 mkdir -p $logs_folder
@@ -18,7 +18,7 @@ validate() {
     
     fi 
 }
-cp mongo.repo vim /etc/yum.repos.d/mongo.repo &>> $logs_file
+cp mongo.repo vim /etc/yum.repos.d &>> $logs_file
 validate $? "copied the mongo repo " 
 
 dnf install mongodb-org -y  &>> $logs_file
