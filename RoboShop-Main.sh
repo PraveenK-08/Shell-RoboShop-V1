@@ -23,33 +23,33 @@ echo "retriving Ip address for $instance"
 if [ $instance -ne "frontend" ]; then
 
    ip=$(aws ec2 describe-instances \
-   --instance-ids "$INSTANCE_ID" \
+   --instance-ids "$instanceId" \
    --query 'Reservations[0].Instances[0].PrivateIpAddress' \
    --output text)
 else
     ip=$(aws ec2 describe-instances \
-  --instance-ids "$INSTANCE_ID" \
+  --instance-ids "$instanceId" \
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
 fi  
 
 echo "$instance : $ip"
-# echo "creating R53 record to the instance"
-# aws route53 change-resource-record-sets \
-#     --hosted-zone-id "Z0271784QT4RL9L1ZC5R" \
-#     --change-batch '{
-#   "Changes": [
-#     {
-#       "Action": "UPSERT",
-#       "ResourceRecordSet": {
-#          "Name": "$instance.$domain.name",
-#          "Type": "A",
-#          "TTL": 1,
-#          "ResourceRecords": [{"Value": "'$ip'"}]
-#         }
-#     }
-#   ]
-# }'
+echo "creating R53 record to the instance"
+aws route53 change-resource-record-sets \
+    --hosted-zone-id "Z0271784QT4RL9L1ZC5R" \
+    --change-batch '{
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+         "Name": "$instance.$domain.name",
+         "Type": "A",
+         "TTL": 1,
+         "ResourceRecords": [{"Value": "'$ip'"}]
+        }
+    }
+  ]
+}'
 
 done
 
