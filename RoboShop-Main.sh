@@ -25,7 +25,8 @@ instanceId=$(aws ec2 run-instances \
     --count 1 \
     --instance-type "t3.micro" \
     --security-group-ids "roboshop-$instance" \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]" \   --query "Instances[0].InstanceId" \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]" \
+    --query "Instances[0].InstanceId" \
     --output text 2>> "$logs_file")
 done
 
