@@ -1,10 +1,10 @@
 #!/bin/bash
 RED='\e[31m'
 GREEN='\e[1;32m'
-logs_folder="/var/log/Shell-practice"
-logs_file="$logs_folder/$0"
+# logs_folder="/var/log/Shell-practice"
+# logs_file="$logs_folder/$0"
 
-mkdir -p $logs_folder
+# mkdir -p $logs_folder
 
 validate() {
     if [ $1 -eq 0 ]; then 
@@ -26,8 +26,7 @@ instanceId=$(aws ec2 run-instances \
     --instance-type "t3.micro" \
     --security-group-ids "roboshop-$instance" \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]" \
-    --query "Instances[0].InstanceId" \
-    --output text 2>> "$logs_file")
+    --query "Instances[0].InstanceId")
 done
 
 
