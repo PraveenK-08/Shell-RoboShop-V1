@@ -33,22 +33,23 @@ else
   --output text)
 fi  
 
-echo "creating R53 record to the instance"
-aws route53 change-resource-record-sets \
-    --hosted-zone-id "Z0271784QT4RL9L1ZC5R" \
-    --change-batch '{
-  "Changes": [
-    {
-      "Action": "UPSERT",
-      "ResourceRecordSet": {
-         "Name": "$instance.$domain.name",
-         "Type": "A",
-         "TTL": 1,
-         "ResourceRecords": [{"Value": "'$ip'"}]
-        }
-    }
-  ]
-}'
+echo "$instance : $ip"
+# echo "creating R53 record to the instance"
+# aws route53 change-resource-record-sets \
+#     --hosted-zone-id "Z0271784QT4RL9L1ZC5R" \
+#     --change-batch '{
+#   "Changes": [
+#     {
+#       "Action": "UPSERT",
+#       "ResourceRecordSet": {
+#          "Name": "$instance.$domain.name",
+#          "Type": "A",
+#          "TTL": 1,
+#          "ResourceRecords": [{"Value": "'$ip'"}]
+#         }
+#     }
+#   ]
+# }'
 
 done
 
