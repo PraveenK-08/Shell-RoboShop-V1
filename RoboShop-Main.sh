@@ -25,9 +25,9 @@ instanceId=$(aws ec2 run-instances \
     --count 1 \
     --instance-type "t3.micro" \
     --security-group-ids "roboshop-$instance" \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]") 
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]") &>> logs_file
 
-validate $? "instance $instance creation"
+validate "$?" "instance $instance creation"
 done
 
 
