@@ -2,6 +2,7 @@
 RED='\e[31m'
 GREEN='\e[1;32m'
 Normal="\e[0m"
+user_id=$(id -u)
 logs_folder="/var/log/Shell-RoboShop-V1"
 logs_file="$logs_folder/$0"
 
@@ -32,7 +33,7 @@ validate $? "Enable redis version 7 version "
 dnf install redis -y &>> $logs_file
 validate $? "Install redis"
 
-sed -i -e 's/^bind 127.0.0.1/0.0.0.0/' -e 's/^protected-mode yes/protected-mode no/' /etc/redis/redis.conf
+sed -i -e 's/^bind 127.0.0.1/bind 0.0.0.0/' -e 's/^protected-mode yes/protected-mode no/' /etc/redis/redis.conf
 validate $? "Configuration file updated"
 
 systemctl enable redis

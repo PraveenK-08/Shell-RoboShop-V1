@@ -2,6 +2,7 @@
 RED='\e[31m'
 GREEN='\e[1;32m'
 Normal="\e[0m"
+user_id=$(id -u)
 logs_folder="/var/log/Shell-RoboShop-V1"
 logs_file="$logs_folder/$0"
 
@@ -31,8 +32,9 @@ dnf install mongodb-org -y  &>> $logs_file
 validate $? "Installing mongodb"
 
 systemctl enable mongod &>> $logs_file
+validate $? "package enabled  "
 systemctl start mongod &>> $logs_file
-validate $? "package enabled and started "
+validate $? "package started "
 
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>> $logs_file
 validate $? "Configuration update "
