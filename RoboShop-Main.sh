@@ -22,12 +22,12 @@ echo "retriving Ip address for $instance"
 
 if [ $instance -ne "frontend" ]; then
 
-  $ip=$(aws ec2 describe-instances \
-  --instance-ids "$INSTANCE_ID" \
-  --query 'Reservations[0].Instances[0].PrivateIpAddress' \
-  --output text)
+   ip=$(aws ec2 describe-instances \
+   --instance-ids "$INSTANCE_ID" \
+   --query 'Reservations[0].Instances[0].PrivateIpAddress' \
+   --output text)
 else
-    $ip=$(aws ec2 describe-instances \
+    ip=$(aws ec2 describe-instances \
   --instance-ids "$INSTANCE_ID" \
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
