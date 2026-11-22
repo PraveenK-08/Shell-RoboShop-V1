@@ -20,9 +20,9 @@ aws ec2 wait instance-running --region "us-east-1" --instance-ids "$instanceId"
 
 echo "retriving Ip address for $instance"
 
-if[ $instance -ne "frontend" ]; then
+if [ $instance -ne "frontend" ]; then
 
- $ip=$(aws ec2 describe-instances \
+  $ip=$(aws ec2 describe-instances \
   --instance-ids "$INSTANCE_ID" \
   --query 'Reservations[0].Instances[0].PrivateIpAddress' \
   --output text)
