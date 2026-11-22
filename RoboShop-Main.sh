@@ -27,6 +27,8 @@ instanceId=$(aws ec2 run-instances \
     --security-group-ids "roboshop-$instance" \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=RoboShop-$instance}]" \
     --query "Instances[0].InstanceId")
+
+echo "$instance instance is created "    
 done
 
 
