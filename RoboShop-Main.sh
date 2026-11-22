@@ -16,19 +16,19 @@ instanceId=$(aws ec2 run-instances \
 echo "$instance instance is created "
 echo "instance running up....."
 
-aws ec2 wait instance-running --region "us-east-1" --instance-ids "$instanceId"
+aws ec2 wait instance-running --region "us-east-1" --instance-ids $instanceId
 
 echo "retriving Ip address for $instance"
 
 if [ $instance -ne "frontend" ]; then
 
    ip=$(aws ec2 describe-instances \
-   --instance-ids "$instanceId" \
+   --instance-ids $instanceId \
    --query 'Reservations[0].Instances[0].PrivateIpAddress' \
    --output text)
 else
     ip=$(aws ec2 describe-instances \
-  --instance-ids "$instanceId" \
+  --instance-ids $instanceId \
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
 fi  
