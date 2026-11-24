@@ -45,7 +45,7 @@ if [ $? -ne 0 ]; then
 
 else
     echo "[INFO]deleting old user================="
-    userdel -r roboshop
+    userdel -r roboshop &>> $logs_file
     echo "[INFO]creating new user================="
     useradd --system --shell /sbin/nologin --home /app --comment "roboshop user creation" roboshop  &>> $logs_file
     validate $? "creating system user "
