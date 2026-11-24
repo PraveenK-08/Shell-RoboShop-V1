@@ -76,7 +76,7 @@ validate $? "configuration file update "
 cp "$script_path/user.service" /etc/systemd/system/user.service
 validate $? "service file copied"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> logs_file
 validate $? "reloading service"
 systemctl enable user
 validate $? "service enable"

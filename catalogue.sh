@@ -47,6 +47,7 @@ if [ $? -ne 0 ]; then
 
 else
     echo "[INFO]deleting old user================="
+    pkill -9 -u roboshop &>> $logs_file
     userdel -r roboshop &>> $logs_file
     echo "[INFO]creating new user================="
     useradd --system --shell /sbin/nologin --home /app --comment "roboshop user creation" roboshop  &>> $logs_file
@@ -76,7 +77,7 @@ validate $? "configuration file update "
 cp "$script_path/catalogue.service" /etc/systemd/system/catalogue.service
 validate $? "service file copied"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> logs_file
 validate $? "reloading service"
 systemctl enable catalogue
 validate $? "service enable"
