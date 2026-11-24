@@ -13,7 +13,7 @@ fi
 
 mkdir -p $logs_folder
 
-echo " mongodb server configuration is started========="
+echo " mysql server configuration is started========="
 echo "started time = $(date +"%Y%m%d_%H%M%S")"
 validate() {
     if [ $1 -eq 0 ]; then 

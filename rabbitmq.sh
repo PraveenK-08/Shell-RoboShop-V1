@@ -13,7 +13,7 @@ fi
 
 mkdir -p $logs_folder
 
-echo " Redis server configuration is started========="
+echo " Rabbitmq server configuration is started========="
 echo "started time = $(date +"%Y%m%d_%H%M%S")"
 validate() {
     if [ $1 -eq 0 ]; then 
