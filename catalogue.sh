@@ -67,6 +67,7 @@ npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
 app_fullpath=$(realpath catalogue.service)
+echo $app_fullpath
 
 sed -i "s/DOMAIN_NAME/$domain_name/" $app_fullpath
 validate $? "configuration file update "
