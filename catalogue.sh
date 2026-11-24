@@ -92,9 +92,9 @@ validate $? "mongodb client application is installed"
 echo "checking whether the data is already present or not"
 
 
-dataCount=$(mongosh --host mongo.$domain_name --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()') &>>logs_file
+dataCount=$(mongosh --host mongodb.$domain_name --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()') &>>logs_file
 if [ $dataCount -eq 0 ]; then
-    mongosh --host mongo.$domain_name </app/db/master-data.js &>>logs_file
+    mongosh --host mongodb.$domain_name </app/db/master-data.js &>>logs_file
     validate $? "data load"
     
 else
