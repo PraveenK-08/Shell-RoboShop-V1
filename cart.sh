@@ -80,7 +80,7 @@ validate $? "service file copied"
 
 systemctl daemon-reload &>> logs_file
 validate $? "reloading service"
-systemctl enable cart
-validate $? "service enable"
+systemctl enable cart &>> logs_file
+validate $? "service enable" 
 systemctl start cart
 validate $? "start service"
