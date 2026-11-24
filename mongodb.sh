@@ -28,6 +28,7 @@ validate() {
 cp mongo.repo /etc/yum.repos.d &>> $logs_file
 validate $? "creating repo file" 
 
+echo "installation started ========"
 dnf install mongodb-org -y  &>> $logs_file
 validate $? "Installing mongodb"
 

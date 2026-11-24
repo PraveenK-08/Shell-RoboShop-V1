@@ -28,7 +28,7 @@ validate() {
 
 dnf module enable mysql:8.4 -y &>> $logs_file
 validate $? "Enable mysql:8.4 "
-
+echo "installation started ========"
 dnf install mysql-server -y  &>> $logs_file
 validate $? "install mysql server " 
 
