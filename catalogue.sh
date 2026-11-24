@@ -69,7 +69,7 @@ npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
 
-sed -i "s/DOMAIN_NAME/$domain_name/" "$script_path/catalogue.service"
+sed -i "s/DOMAIN_NAME/$domain_name/g" "$script_path/catalogue.service"
 validate $? "configuration file update "
 
 
