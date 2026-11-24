@@ -37,3 +37,46 @@ echo "[INFO] installing maven and java packages"
 dnf install maven java-25-openjdk-devel -y &>> $logs_file
 validate $? " Maven and Java Installation"
 
+alternatives --set java "/usr/lib/jvm/java-25-openjdk/bin/java"
+validate $? "Setting Java 25 as default Java version"
+
+echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f /usr/bin/java)))" > /etc/profile.d/java.sh
+source /etc/profile.d/java.sh
+echo $JAVA_HOME
+validate $? "Setting JAVA_HOME for maven"
+
+id roboshop  &>> $logs_file
+if [ $? -ne 0 ]; then
+    echo "[INFO]creating new user================="
+    useradd --system --shell /sbin/nologin --home /app --comment "roboshop user creation" roboshop  &>> $logs_file
+    validate $? "creating system user "
+
+else
+    echo "[INFO]deleting old user================="
+    pkill -9 -u roboshop &>> $logs_file
+    userdel -r roboshop &>> $logs_file
+    echo "[INFO]creating new user================="
+    useradd --system --shell /sbin/nologin --home /app --comment "roboshop user creation" roboshop  &>> $logs_file
+    validate $? "creating system user "
+fi 
+
+rm -rf /app
+mkdir -p /app
+validate $? "app directory created"
+
+curl -L -o /tmp/shipping.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/shipping-v4.zip  &>> $logs_file
+validate $? "downloading shipping app"
+
+cd /app
+unzip /tmp/shipping.zip  &>> $logs_file
+validate $? "unzip the application file"
+
+mvn clean package
+validate $? "Installing Dependencies"
+
+mv target/shipping.jar shipping.jar
+validate $? "Moving Shipping Jar file"
+
+dnf install mysql -y
+validate $? "Installing mysql client"
+
