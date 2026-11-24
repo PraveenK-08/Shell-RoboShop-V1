@@ -51,7 +51,7 @@ else
     validate $? "creating system user "
 fi 
 
-
+rm -rf /app
 mkdir /app
 validate $? "app directory created"
 
