@@ -5,6 +5,7 @@ Normal="\e[0m"
 user_id=$(id -u)
 logs_folder="/var/log/Shell-RoboShop-V1"
 logs_file="$logs_folder/$0"
+script_path=$(dirname $realpath $0)
 domain_name=teram.store
 
 if [ $user_id -ne 0 ]; then
@@ -66,14 +67,12 @@ echo "[info] Installing Dependencies is started============="
 npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
-app_fullpath=$(realpath catalogue.service)
-echo $app_fullpath
 
-sed -i "s/DOMAIN_NAME/$domain_name/" $app_fullpath
+sed -i "s/DOMAIN_NAME/$domain_name/" "$script_path/catalogue.service"
 validate $? "configuration file update "
 
 
-cp "$app_fullpath" /etc/systemd/system/catalogue.service
+cp "$script_path/catalogue.service" /etc/systemd/system/catalogue.service
 validate $? "service file copied"
 
 
