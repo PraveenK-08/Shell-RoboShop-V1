@@ -27,31 +27,31 @@ validate() {
     fi 
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $logs_file
 validate $? "nodejs old version disabled"
 
-dnf module enable nodejs:24 -y
+dnf module enable nodejs:24 -y  &>> $logs_file
 validate $? "nodejs version:24 enabled" 
 
 echo "[info]installation started=============="
-dnf install nodejs -y
+dnf install nodejs -y   &>> $logs_file
 validate $? "installing nodejs package "
 
-useradd --system --shell /sbin/nologin --home /app "roboshop user creation" roboshop
+useradd --system --shell /sbin/nologin --home /app "roboshop user creation" roboshop  &>> $logs_file
 validate $? "creating system user "
 
 mkdir /app
 validate $? "app directory created"
 
-curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip  &>> $logs_file
 validate $? "downloading catalogue app"
 
 cd /app
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip  &>> $logs_file
 validate $? "unzip the application file"
 
 echo "[info] Installing Dependencies is started============="
-npm install
+npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
 
