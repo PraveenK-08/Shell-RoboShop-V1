@@ -52,7 +52,7 @@ else
 fi 
 
 rm -rf /app
-mkdir /app
+mkdir -p /app
 validate $? "app directory created"
 
 curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip  &>> $logs_file
@@ -67,7 +67,7 @@ npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
 app_fullPath=$(realpath catalogue.service)
-cp $app_fullpath /etc/systemd/system/catalogue.service
+cp "$app_fullpath" /etc/systemd/system/catalogue.service
 validate $? "service file copied"
 
 # sed -i "s/DOMAIN_NAME/$domain_name" catalogue.service
