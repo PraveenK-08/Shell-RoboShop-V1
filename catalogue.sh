@@ -37,8 +37,9 @@ echo "[info]installation started=============="
 dnf install nodejs -y   &>> $logs_file
 validate $? "installing nodejs package "
 
-id roboshop
-if[ $? -ne 0 ]; then
+id roboshop  &>> $logs_file
+if [ $? -ne 0 ]; then
+    echo "[INFO]creating new user================="
     useradd --system --shell /sbin/nologin --home /app --comment "roboshop user creation" roboshop  &>> $logs_file
     validate $? "creating system user "
 
