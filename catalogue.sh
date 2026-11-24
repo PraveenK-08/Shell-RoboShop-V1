@@ -66,10 +66,12 @@ echo "[info] Installing Dependencies is started============="
 npm install  &>> $logs_file
 validate $? "installing application dependencies"
 
+app_fullpath=$(realpath catalogue.service)
+
 sed -i "s/DOMAIN_NAME/$domain_name/" $app_fullpath
 validate $? "configuration file update "
 
-app_fullpath=$(realpath catalogue.service)
+
 cp "$app_fullpath" /etc/systemd/system/catalogue.service
 validate $? "service file copied"
 
