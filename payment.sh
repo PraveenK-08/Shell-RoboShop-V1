@@ -72,9 +72,9 @@ validate $? "service file copied"
 
 systemctl daemon-reload &>> $logs_file
 validate $? "Reloading the service"
-systemctl enable shipping
-validate $? "Enable shipping service"
-systemctl start shipping
-validate $? "start shipping service"
+systemctl enable payment
+validate $? "Enable payment service"
+systemctl start payment
+validate $? "start payment service"
 
 
