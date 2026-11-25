@@ -80,16 +80,16 @@ validate $? "Moving Shipping Jar file"
 dnf install mysql -y  &>> $logs_file
 validate $? "Installing mysql client"
 
-count=$(mysql -h mysql.$domain_name -uroot  -pRoboShop@1 -D cities -N -s -e "SELECT COUNT(*) FROM cities";)
+count=$(mysql -h mysql.$domain_name -uroot  -pRoboShop@1 -D cities -N -s -e "SELECT COUNT(*) FROM cities";) &>> $logs_file
 
 if [ $count -eq 0 ] || [ -z $count ]; then
-    mysql -h mysql.$domain_name -uroot -pRoboShop@1 < /app/db/master-data.sql 
+    mysql -h mysql.$domain_name -uroot -pRoboShop@1 < /app/db/master-data.sql &>> $logs_file
     validate $? "Loading cities data"
 else
     echo "Data already loaded , so Skipping==========="
 fi
 
-mysql -h mysql.$domain_name -uroot -pRoboShop@1 < /app/db/app-user.sql
+mysql -h mysql.$domain_name -uroot -pRoboShop@1 < /app/db/app-user.sql &>> $logs_file
 validate $? "Creating app user"
 
 sed -i "s/domainName/$domain_name/g" "$script_path/shipping.service"
@@ -99,7 +99,7 @@ validate $? "configuration file update "
 cp "$script_path/shipping.service" /etc/systemd/system/shipping.service
 validate $? "service file copied"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $logs_file
 validate $? "Reloading the service"
 systemctl enable shipping
 validate $? "Enable shipping service"
