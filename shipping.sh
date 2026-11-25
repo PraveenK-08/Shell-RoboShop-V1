@@ -71,12 +71,22 @@ cd /app
 unzip /tmp/shipping.zip  &>> $logs_file
 validate $? "unzip the application file"
 
-mvn clean package
+mvn clean package  &>> $logs_file
 validate $? "Installing Dependencies"
 
-mv target/shipping.jar shipping.jar
+mv target/shipping.jar shipping.jar  &>> $logs_file
 validate $? "Moving Shipping Jar file"
 
-dnf install mysql -y
+dnf install mysql -y  &>> $logs_file
 validate $? "Installing mysql client"
 
+
+
+# HAS_DATA=$(mysql -u root -pRoboShop@1 -D cities  -N -s -e "SELECT 1 FROM $TABLE_NAME LIMIT 1;")
+
+sed -i "s/domainName/$domain_name/g" "$script_path/shipping.service"
+validate $? "configuration file update "
+
+
+cp "$script_path/shipping.service" /etc/systemd/system/shipping.service
+validate $? "service file copied"
